@@ -1,0 +1,9 @@
+hand_cusor.png
+size:416,308
+filter:Linear,Linear
+pma:true
+circle_1
+bounds:2,2,304,304
+offsets:123,123,550,550
+hand_cursor_10
+bounds:308,178,104,128

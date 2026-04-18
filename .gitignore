@@ -1,0 +1,43 @@
+
+#unity local folder
+
+/.claude/
+/.utmp/
+/Library/
+/Logs/
+/obj/
+/Temp/
+/UserSettings/
+/Builds/
+/PlayerModels/
+/Assets/_test/
+/Assets/_test.meta
+
+#IDE 
+
+/.vs/
+/.vscode/
+/.idea/
+.vsconfig
+*.slnx
+*.sln
+*.csproj
+
+#built addressable
+
+/Assets/AddressableAssetsData/link.xml
+/Assets/AddressableAssetsData/link.xml.meta
+/Assets/AddressableAssetsData/Windows/
+/Assets/AddressableAssetsData/Windows.meta
+/Assets/AddressableAssetsData/Android/
+/Assets/AddressableAssetsData/Android.meta
+/Assets/AddressableAssetsData/iOS/
+/Assets/AddressableAssetsData/iOS.meta
+
+#build project files
+
+/Assets/BuildReports/
+/Assets/BuildReports.meta
+/Assets/StreamingAssets/GameConfig/
+/Assets/StreamingAssets/GameConfig.meta
+/Assets/Plugins/Android/FirebaseCrashlytics.androidlib/res/values/crashlytics_build_id.xml
