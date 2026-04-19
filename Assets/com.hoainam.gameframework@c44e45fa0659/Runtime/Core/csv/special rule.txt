@@ -1,0 +1,8 @@
+Rule 1: cell contain comma must be quoted like "super, luxury car"
+
+Rule 2: cell contain double-quote must be quoted and use double double-quote to denote double-quote like
+"super, ""big"" car"
+
+Rule 3: cell contain line break must be quoted like
+"go into
+the car"

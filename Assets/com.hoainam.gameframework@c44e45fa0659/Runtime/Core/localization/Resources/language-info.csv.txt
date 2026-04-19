@@ -1,0 +1,17 @@
+language,language group,android iso code,ios iso code,local language name
+English,Latin,en,en,English
+Vietnamese,Latin,vi,vi,Tiếng Việt
+German,Latin,de,de,Deutsch
+Spanish,Latin,es,es,Español
+French,Latin,fr,fr,Français
+Russian,Latin,ru,ru,Русский
+Italian,Latin,it,it,Italiano
+Indonesian,Latin,in,in,Indonesia
+Turkish,Latin,tr,tr,Türkçe
+Portuguese,Latin,pt,pt,Português
+Korean,Korean,ko,ko,한국어
+Japanese,Japanese,ja,ja,日本語
+ChineseSimplified,Chinese,zh-rCN,zh-Hans,中文（简体）
+ChineseTraditional,Chinese,zh-rTW,zh-Hant,中文（繁體）
+Hindi,Hindi,hi,hi,हिन्दी
+Thai,Thai,th,th,ประเทศไทย

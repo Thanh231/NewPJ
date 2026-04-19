@@ -1,0 +1,23 @@
+{
+    "name": "GameFramework.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GameFramework",
+        "UniTask",
+        "Unity.EditorCoroutines.Editor",
+        "Unity.TextMeshPro",
+        "Unity.TextMeshPro.Editor",
+        "AppleAuth.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

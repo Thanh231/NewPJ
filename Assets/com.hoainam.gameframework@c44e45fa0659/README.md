@@ -1,0 +1,1 @@
+after importing GameFramework into project, if it complain missing assembly relating to DoTween, go to "Tools->Demigiant->DoTween Utilities panel", then click button "Create ASMDEF".

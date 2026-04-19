@@ -1,0 +1,18 @@
+{
+  "name": "com.hoainam.gameframework",
+  "displayName": "GameFramework",
+  "author": {
+    "name": "Hoai Nam",
+    "url": "https://github.com/hoainam1593"
+  },
+  "version": "4.1.0",
+  "unity": "6.0",
+  "description": "comprehensive solution to game development",
+  "keywords": [
+    "game"
+  ],
+  "license": "MIT",
+  "category": "library",
+  "dependencies": {},
+  "_fingerprint": "c44e45fa0659b9d77a2123b1123190676ab399d0"
+}

@@ -1,0 +1,32 @@
+{
+    "name": "GameFramework",
+    "rootNamespace": "",
+    "references": [
+        "Unity.Addressables",
+        "Unity.ResourceManager",
+        "UniTask",
+        "Unity.Purchasing",
+        "Unity.Purchasing.Stores",
+        "Unity.TextMeshPro",
+        "R3.Unity",
+        "DOTween.Modules",
+        "AdjustSdk.Scripts",
+        "AppleAuth",
+        "Unity.Notifications.Android",
+        "Unity.Notifications.iOS",
+        "MaxSdk.Scripts",
+        "Google.Play.AppUpdate",
+        "Google.Play.Common",
+        "Google.Play.Review",
+        "Balancy"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

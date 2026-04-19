@@ -1,0 +1,10 @@
+@channel
+---- link windows build: <dev input>
+---- link apk build: <dev input>
+---- link aab build: <dev input>
+---- link ios build: <dev input>
+==== version: <dev input>
+==== use server: <dev input> 
+++++ link patch note: <dev input>
+++++ what did dev test ON ANDROID e.g upto which level, which feature: <dev input>
+++++ known non-critical bugs will be fixed later: <dev input>

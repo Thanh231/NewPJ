@@ -1,0 +1,3 @@
+"CFBundleDisplayName" = "{appName}";
+"CFBundleName" = "{appName}";
+"NSUserTrackingUsageDescription" = "{userTrackingUsageDescription}";
