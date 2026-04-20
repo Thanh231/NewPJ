@@ -43,6 +43,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -171,6 +172,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -265,7 +267,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3623071172136723527}
-  - component: {fileID: 7688910974880133057}
+  - component: {fileID: 4393139397660500907}
+  - component: {fileID: 504033034558578932}
   m_Layer: 0
   m_Name: audio
   m_TagString: Untagged
@@ -290,7 +293,7 @@ Transform:
   - {fileID: 2983008325918169598}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7688910974880133057
+--- !u!114 &4393139397660500907
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -299,9 +302,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 8346089873442273741}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9de4d27f478779b49a2f0a13e685f36a, type: 3}
+  m_Script: {fileID: 11500000, guid: c0892ff1229a40b44b6a6e4a3615d252, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  audioConfig: {fileID: 11400000, guid: 17a866bb37dd4744395459e3bd1a6f14, type: 2}
-  audioSource_music: {fileID: 1774357805980293374}
-  audioSource_sound: {fileID: 3049626754951205266}
+  m_EditorClassIdentifier: GameFramework::AudioController
+  audioSource_music: {fileID: 0}
+  audioSource_sound: {fileID: 0}
+--- !u!114 &504033034558578932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346089873442273741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6caa3589cb47bb94cb71915bb303d6ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioGameManger

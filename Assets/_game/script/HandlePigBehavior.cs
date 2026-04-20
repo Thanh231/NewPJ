@@ -393,7 +393,7 @@ public class HandlePigBehavior : MonoBehaviour
 
         if (!pig.IsPigValid() && !onHandItemUsed)
         {
-            AudioController.instance.PlaySound(AudioIndex.invalid_cat.ToString());
+            // AudioController.instance.PlaySound(AudioIndex.invalid_cat.ToString());
             HapticController.PlayHaptic(HapticType.tap_invalid_cat);
             pig.InvalidFeedback();
             return;
@@ -404,7 +404,7 @@ public class HandlePigBehavior : MonoBehaviour
         if (_straightSlot >= _maxstraightSlot)
         {
             EventManager.OnFullConveyorSlot?.Invoke();
-            AudioController.instance.PlaySound(AudioIndex.error.ToString());
+            // AudioController.instance.PlaySound(AudioIndex.error.ToString());
             return;
         }
 
@@ -476,7 +476,7 @@ public class HandlePigBehavior : MonoBehaviour
     {
         UIManager.Instance.UpdateStraightSlot(_straightSlot, _maxstraightSlot);
 
-        AudioController.instance.PlaySound(AudioIndex.valid_cat.ToString());
+        // AudioController.instance.PlaySound(AudioIndex.valid_cat.ToString());
 
         if (pigsInQueue.Contains(pig) || pigsInTempQueue.Contains(pig))
         {

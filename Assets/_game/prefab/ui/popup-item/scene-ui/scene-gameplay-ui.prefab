@@ -323,7 +323,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2822872314672146184}
-  - component: {fileID: 5781283038897201031}
+  - component: {fileID: 3264684159620002057}
   m_Layer: 5
   m_Name: safe-area
   m_TagString: Untagged
@@ -352,7 +352,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5781283038897201031
+--- !u!114 &3264684159620002057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -361,9 +361,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3004039554452175417}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f27e5abe229119d4f8222392b0d71efb, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f232a6fa386b4d72848fab604ed1429, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: GameFramework::Crystal.SafeArea
+  m_EditorClassIdentifier: MCK::MobileConsole.UI.SafeArea
 --- !u!1 &3856659584484479702
 GameObject:
   m_ObjectHideFlags: 0

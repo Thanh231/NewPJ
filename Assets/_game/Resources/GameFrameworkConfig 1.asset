@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6abfbeca84b7514fa5b2ff85e238993, type: 3}
-  m_Name: GameFrameworkConfig
+  m_Script: {fileID: 11500000, guid: 0399a1c2dc6f5804bb95dbbad2258629, type: 3}
+  m_Name: GameFrameworkConfig 1
   m_EditorClassIdentifier: GameFramework::GameFrameworkConfig
   adjustAppToken: 
   adjustIAPEventToken: 
@@ -30,27 +30,7 @@ MonoBehaviour:
     iosBanner: 
     iosInterstitial: 
     iosRewardedVideo: 
-  audioClips:
-  - audioClipName: bgm
-    audioClip: {fileID: 8300000, guid: 2cebe5ef59f447d4d803665e3ecf1a2f, type: 3}
-  - audioClipName: bgm_gameplay
-    audioClip: {fileID: 8300000, guid: 2cebe5ef59f447d4d803665e3ecf1a2f, type: 3}
-  - audioClipName: valid_cat
-    audioClip: {fileID: 8300000, guid: 5ef4d0e295917784caaf374bcc8daf39, type: 3}
-  - audioClipName: error
-    audioClip: {fileID: 8300000, guid: 5137ae01f18ba414a8b55bf9809135bc, type: 3}
-  - audioClipName: yarn
-    audioClip: {fileID: 8300000, guid: cd452080f7f56f9468ea0723be44d143, type: 3}
-  - audioClipName: win
-    audioClip: {fileID: 8300000, guid: 668620113e9d6dc4483ba3d8dbae9fcf, type: 3}
-  - audioClipName: lose
-    audioClip: {fileID: 8300000, guid: 8f29a41eede8e5e4eb6577f230f56ac2, type: 3}
-  - audioClipName: invalid_cat
-    audioClip: {fileID: 8300000, guid: 5137ae01f18ba414a8b55bf9809135bc, type: 3}
-  - audioClipName: tap_button
-    audioClip: {fileID: 8300000, guid: 7dad007526c845341917412f2ce63457, type: 3}
-  - audioClipName: destroy_cat
-    audioClip: {fileID: 8300000, guid: a1853db8e77dcd54180392b92b1ba35e, type: 3}
+  audioClips: []
   awsS3BucketName: 
   awsS3GameContentRoot: 
   awsS3UserDataRoot: 
@@ -67,9 +47,9 @@ MonoBehaviour:
   balancyProductionBranchName: 
   androidTargetSDK: 35
   screenOrientation: 0
-  androidKeystorePassword:
-  slackChannelNameForBuildNote:
-  slackBotTokenForBuildNote:
+  androidKeystorePassword: 
+  slackChannelNameForBuildNote: 
+  slackBotTokenForBuildNote: 
   playPassPID: 
   iapDelayForTestRepay: -1
   facebookInstallReferrerDecryptKey: 
@@ -83,7 +63,7 @@ MonoBehaviour:
     scaleDuration: 0.3
     scaleInEase: 27
     scaleOutEase: 26
-  popupAddressablePath: popup
+  popupAddressablePath: 
   webClientId: 
   iosClientId: 
   iosUrlScheme: 

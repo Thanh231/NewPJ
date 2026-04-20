@@ -211,7 +211,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7832824451194800459}
-  - component: {fileID: 7964793995168032627}
+  - component: {fileID: 6003244155133777062}
   m_Layer: 0
   m_Name: popup-manager
   m_TagString: Untagged
@@ -236,7 +236,7 @@ Transform:
   - {fileID: 1801490786363510335}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7964793995168032627
+--- !u!114 &6003244155133777062
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -245,8 +245,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8719480582999758207}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10f7a897ef39db4479c9fde6d717e4ee, type: 3}
+  m_Script: {fileID: 11500000, guid: cfefc821246c66d4181e52b6ef4eb059, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: GameFramework::PopupManager
   screenCanvas: {fileID: 8634470328231243679}
   worldCanvas: {fileID: 481234047556349429}

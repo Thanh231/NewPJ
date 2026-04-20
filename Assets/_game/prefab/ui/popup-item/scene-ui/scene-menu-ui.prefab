@@ -838,7 +838,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c752d3501ec1664fae4482391aa63f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneMenuUI
-  btnSettings: {fileID: 0}
 --- !u!1 &6959721861448823291
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,7 +1018,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5942172839543765344}
-  - component: {fileID: 7724321343127689005}
+  - component: {fileID: 6634820208963392730}
   m_Layer: 5
   m_Name: safe-area
   m_TagString: Untagged
@@ -1048,7 +1047,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7724321343127689005
+--- !u!114 &6634820208963392730
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1057,9 +1056,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7578867735846564375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f27e5abe229119d4f8222392b0d71efb, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f232a6fa386b4d72848fab604ed1429, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: GameFramework::Crystal.SafeArea
+  m_EditorClassIdentifier: MCK::MobileConsole.UI.SafeArea
 --- !u!1 &7815997200619680006
 GameObject:
   m_ObjectHideFlags: 0

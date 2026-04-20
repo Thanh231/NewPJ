@@ -110,7 +110,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 505506158851248325}
-  - component: {fileID: 5702709058566763344}
+  - component: {fileID: 1685946518881259085}
   m_Layer: 0
   m_Name: loader-overlay
   m_TagString: Untagged
@@ -134,7 +134,7 @@ Transform:
   - {fileID: 4788854421695306260}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5702709058566763344
+--- !u!114 &1685946518881259085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,10 +143,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7975577262511424949}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dbff3b9cce61ce49988011e50a8021d, type: 3}
+  m_Script: {fileID: 11500000, guid: 2dc2ecb8310fc51469ece0f973737a74, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  parentCanvas: {fileID: 4788854421695306260}
-  prefabOverlayClassic: {fileID: 3608845362462959398, guid: 88727e834c222d44894001f88ec93d55, type: 3}
-  prefabOverlayUnityAnim: {fileID: 6274265331141441688, guid: 86ba365381a28444b81ee2ce4209d47a, type: 3}
+  m_EditorClassIdentifier: GameFramework::LoaderOverlayManager
+  parentCanvas: {fileID: 0}
+  prefabOverlayClassic: {fileID: 0}
+  prefabOverlayUnityAnim: {fileID: 0}
   overlayType: 0

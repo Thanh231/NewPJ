@@ -19,7 +19,8 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
 	public void PlaySound(string key)
 	{
-		audioSource_sound.PlayOneShot(GetAudioClip(key));
+		return;	
+		// audioSource_sound.PlayOneShot(GetAudioClip(key));
 	}
 
 	public void SetVolumeMusic(float volume)
@@ -34,6 +35,7 @@ public class AudioController : SingletonMonoBehaviour<AudioController>
 
 	private AudioClip GetAudioClip(string key)
 	{
-		return GameFrameworkConfig.instance.audioClips.Find(x => x.audioClipName.Equals(key)).audioClip;
+		return null;
+		// return GameFrameworkConfig.instance.audioClips.Find(x => x.audioClipName.Equals(key)).audioClip;
 	}
 }

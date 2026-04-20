@@ -14,6 +14,7 @@ public partial class SceneController_load : MonoBehaviour
     private async UniTask Load()
     {
         var continueLoad = await InitFirstControllers();
+        Debug.Log("congthanh1");
         if (!continueLoad)
         {
             return;
@@ -21,7 +22,7 @@ public partial class SceneController_load : MonoBehaviour
 
         await InitOrderedControllers();
         await InitUnorderedControllers();
-
+        Debug.Log("congthanh2");
         LoaderOverlayManager.instance.LoadScene(nextSceneName);
     }
 
