@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class HandlePigBehavior : MonoBehaviour
+public class HandlePigBehavior : SingletonMonoBehaviour<HandlePigBehavior>
 {
     private float timer = 0f;
     private int _straightSlot = 0;
@@ -38,6 +38,7 @@ public class HandlePigBehavior : MonoBehaviour
     [Header("Stack Settings")]
     public float pigHeightOffset = 1.2f;
     public SpawnManager spawnManager;
+    public bool isRushMode = false;
 
     void OnEnable()
     {
@@ -245,8 +246,11 @@ public class HandlePigBehavior : MonoBehaviour
                 pig.currentPlate = null;
             }
             pig.ExecuteDestroy();
+            pigsInQueue.Remove(pig);
+            pigsInTempQueue.Remove(pig);
 
         }
+        RearrangeQueue(0, false);
         CheckAndEnableFinalRush();
     }
     private void CheckAndEnableFinalRush()
@@ -254,16 +258,19 @@ public class HandlePigBehavior : MonoBehaviour
         PigComponent[] allPigs = spawnManager.pigGroup.GetComponentsInChildren<PigComponent>();
         if (allPigs.Length <= 6 && allPigs.Length > 0)
         {
-            foreach (var p in allPigs)
-            {
-                p.SetConveyorSpeedMultiplier(3f);
-                p.isRush = true;
-            }
+            // foreach (var p in allPigs)
+            // {
+            //     p.SetConveyorSpeedMultiplier(3f);
+            //     p.isRush = true;
+            // }
+            isRushMode = true;
+            EventManager.InRushMode?.Invoke();
         }
     }
     private void IncreaseStraightSlot()
     {
         _straightSlot = _straightSlot + 1 > _maxstraightSlot ? _maxstraightSlot : _straightSlot + 1;
+        // Debug.Log("Straight slot: " + _straightSlot + "/" + _maxstraightSlot);
         UIManager.Instance.UpdateStraightSlot(_straightSlot, _maxstraightSlot);
     }
 
@@ -362,13 +369,22 @@ public class HandlePigBehavior : MonoBehaviour
 
     private void RefundStraightSlot(PigComponent pig)
     {
-        _straightSlot = _straightSlot - 1 < 0 ? 0 : _straightSlot - 1;
-        UIManager.Instance.UpdateStraightSlot(_straightSlot, _maxstraightSlot);
+        bool wasCountedInStraightSlot =
+            pigsInConveyor.Contains(pig) &&
+            !pigsInQueue.Contains(pig) &&
+            !pigsInTempQueue.Contains(pig);
+
+        if (wasCountedInStraightSlot)
+        {
+            _straightSlot = Mathf.Max(0, _straightSlot - 1);
+            // Debug.Log("Refund straight slot. Straight slot: " + _straightSlot + "/" + _maxstraightSlot);
+            UIManager.Instance.UpdateStraightSlot(_straightSlot, _maxstraightSlot);
+        }
         pigsInConveyor.Remove(pig);
     }
-
     private void ResetData()
     {
+        isRushMode = false;
         pigsInConveyor.Clear();
         pigsInQueue.Clear();
         pigsInTempQueue.Clear();
@@ -393,8 +409,11 @@ public class HandlePigBehavior : MonoBehaviour
 
         if (!pig.IsPigValid() && !onHandItemUsed)
         {
-            // AudioController.instance.PlaySound(AudioIndex.invalid_cat.ToString());
-            HapticController.PlayHaptic(HapticType.tap_invalid_cat);
+            if (!isTesting)
+            {
+                AudioController.instance.PlaySound(AudioIndex.invalid_cat.ToString());
+                HapticController.PlayHaptic(HapticType.tap_invalid_cat);
+            }
             pig.InvalidFeedback();
             return;
         }
@@ -404,23 +423,27 @@ public class HandlePigBehavior : MonoBehaviour
         if (_straightSlot >= _maxstraightSlot)
         {
             EventManager.OnFullConveyorSlot?.Invoke();
-            // AudioController.instance.PlaySound(AudioIndex.error.ToString());
+            if (!isTesting)
+            {
+                AudioController.instance.PlaySound(AudioIndex.error.ToString());
+            }
             return;
         }
 
-        if (LevelController.GetMaxLevelUnlock() == 1 && TutorialController.GetTutorialItem(GuideTutorialType.Level_1.ToString()).currentStep.Value == 0)
+        if (!isTesting)
         {
-            TutorialController.AdvanceStep(GuideTutorialType.Level_1.ToString());
+            if (LevelController.GetMaxLevelUnlock() == 1 && TutorialController.GetTutorialItem(GuideTutorialType.Level_1.ToString()).currentStep.Value == 0)
+            {
+                TutorialController.AdvanceStep(GuideTutorialType.Level_1.ToString());
+            }
+
+            if (TutorialController.GetTutorialItem(GuideTutorialType.Full_slot.ToString()).isCompleted.Value == false && inTutorialFullSlot && isTesting == false)
+            {
+                TutorialController.AdvanceStep(GuideTutorialType.Full_slot.ToString());
+                Time.timeScale = 1f;
+            }
+            HapticController.PlayHaptic(HapticType.tap_valid_cat);
         }
-
-
-        if (TutorialController.GetTutorialItem(GuideTutorialType.Full_slot.ToString()).isCompleted.Value == false && inTutorialFullSlot)
-        {
-            TutorialController.AdvanceStep(GuideTutorialType.Full_slot.ToString());
-            Time.timeScale = 1f;
-        }
-
-        HapticController.PlayHaptic(HapticType.tap_valid_cat);
 
         if (pig.IsLinkedPig())
         {
@@ -476,7 +499,10 @@ public class HandlePigBehavior : MonoBehaviour
     {
         UIManager.Instance.UpdateStraightSlot(_straightSlot, _maxstraightSlot);
 
-        // AudioController.instance.PlaySound(AudioIndex.valid_cat.ToString());
+        if (!isTesting)
+        {
+            AudioController.instance.PlaySound(AudioIndex.valid_cat.ToString());
+        }
 
         if (pigsInQueue.Contains(pig) || pigsInTempQueue.Contains(pig))
         {
@@ -486,10 +512,10 @@ public class HandlePigBehavior : MonoBehaviour
         }
 
         RemovePigFromLane(pig);
-        pig.JumpTo(jumpFromLaneSpeed, count, () =>
+        pig.JumpTo(isRushMode ? jumpFromLaneSpeed / 2 : jumpFromLaneSpeed, count, () =>
         {
             onComplete?.Invoke();
-            // TryStartBottomPig(); // ← gọi ngay sau khi pig landing thay vì đợi timer
+            // TryStartBottomPig();
         });
     }
 
@@ -527,7 +553,8 @@ public class HandlePigBehavior : MonoBehaviour
     {
         if (pig == null || queuePos == null || queuePos.Count == 0 || pig.currentState == PigState.Destroying) return;
 
-        // Debug.Log(1);
+        if (pigsInQueue.Contains(pig)) return;
+
         if (pig.currentPlate != null)
         {
             StartCoroutine(ReturnPlateToOrigin(pig.currentPlate));
@@ -589,12 +616,13 @@ public class HandlePigBehavior : MonoBehaviour
         RearrangeQueue(0, false);
         pigsJumpingToQueue.Add(pig);
 
-        if (LevelController.GetMaxLevelUnlock() == 1 && TutorialController.GetTutorialItem(GuideTutorialType.Level_1.ToString()).isCompleted.Value == false)
+        if (!isTesting)
         {
-            TutorialController.AdvanceStep(GuideTutorialType.Level_1.ToString());
+            if (LevelController.GetMaxLevelUnlock() == 1 && TutorialController.GetTutorialItem(GuideTutorialType.Level_1.ToString()).isCompleted.Value == false && isTesting == false)
+            {
+                TutorialController.AdvanceStep(GuideTutorialType.Level_1.ToString());
+            }
         }
-
-
 
         pig.JumpToQueue(queuePos[queueIndex].position, jumpFromQueueSpeed, onComplete: () =>
         {
@@ -603,16 +631,18 @@ public class HandlePigBehavior : MonoBehaviour
             if (pigsInQueue.Count >= queuePos.Count)
             {
                 EventManager.OnQueueFull?.Invoke();
-                if (pigsInConveyor.Count > 0 && TutorialController.GetTutorialItem(GuideTutorialType.Full_slot.ToString()).isCompleted.Value == false)
+
+                if (!isTesting)
                 {
-                    EventManager.onFullSlotTutorial?.Invoke();
-                    inTutorialFullSlot = true;
+                    if (TutorialController.GetTutorialItem(GuideTutorialType.Full_slot.ToString()).isCompleted.Value == false && inTutorialFullSlot == false)
+                    {
+                        EventManager.onFullSlotTutorial?.Invoke();
+                        inTutorialFullSlot = true;
+                    }
                 }
             }
             RearrangeQueue(0, false);
         });
-
-
 
         _straightSlot = Mathf.Max(0, _straightSlot - 1);
         UIManager.Instance.UpdateStraightSlot(_straightSlot, _maxstraightSlot);
@@ -631,11 +661,17 @@ public class HandlePigBehavior : MonoBehaviour
 
         while (elapsed < duration)
         {
+            if (plate == null) yield break;
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
             plate.position = Vector3.Lerp(startPos, targetPos, t);
             plate.rotation = Quaternion.Lerp(plate.rotation, traySlotOrigin.rotation, t);
             yield return null;
+        }
+
+        if (plate == null)
+        {
+            yield break;
         }
 
         plate.transform.SetParent(tray);
@@ -667,13 +703,15 @@ public class HandlePigBehavior : MonoBehaviour
 
         pigsJumpingToStack.Add(pig);
 
-
-        if (LevelController.GetMaxLevelUnlock() == 1 && TutorialController.GetTutorialItem(GuideTutorialType.Level_1.ToString()).currentStep.Value == 2)
+        if (!isTesting)
         {
-            TutorialController.AdvanceStep(GuideTutorialType.Level_1.ToString());
+            if (LevelController.GetMaxLevelUnlock() == 1 && TutorialController.GetTutorialItem(GuideTutorialType.Level_1.ToString()).currentStep.Value == 2)
+            {
+                TutorialController.AdvanceStep(GuideTutorialType.Level_1.ToString());
+            }
         }
 
-        pig.JumpTo(jumpFromQueueSpeed, pigStack.Count, () =>
+        pig.JumpTo(isRushMode ? jumpFromQueueSpeed / 2 : jumpFromQueueSpeed, pigStack.Count, () =>
         {
             // TryStartBottomPig();
             pigsJumpingToStack.Remove(pig);
@@ -769,10 +807,10 @@ public class HandlePigBehavior : MonoBehaviour
     {
         if (pigStack.Count == 0) return;
         timer += Time.deltaTime;
-        if (timer >= 0.18f)
+        if (timer >= (isRushMode ? 0.18f / 2f : 0.18f))
         {
             timer = 0f;
-            TryStartBottomPig(); // ← dùng lại hàm đã tách
+            TryStartBottomPig();
         }
     }
 
@@ -780,16 +818,14 @@ public class HandlePigBehavior : MonoBehaviour
     {
         if (pigStack.Count == 0) return;
         PigComponent pigBottom = pigStack[0];
-        if (pigBottom.currentState != PigState.CanMove) return; // còn đang nhảy → bỏ qua
+        if (pigBottom.currentState != PigState.CanMove) return;
 
         if (!pigBottom.isFirstPgInStack())
         {
-            // Đã đáp nhưng chưa ở đúng vị trí (vd: +1.2f) → trượt xuống, rồi try lại
             pigBottom.MoveToStack(spawnManager.allWaypoints[0].position, TryStartBottomPig);
             return;
         }
 
-        // Đúng vị trí + CanMove → start luôn
         timer = 0f;
         pigBottom.StartMove();
         pigStack.RemoveAt(0);
@@ -797,25 +833,8 @@ public class HandlePigBehavior : MonoBehaviour
         {
             Vector3 newPos = spawnManager.allWaypoints[0].position;
             newPos.y += i * pigHeightOffset;
-            if (pigStack[i].currentState == PigState.CanMove) // đã đáp → gọi được
+            if (pigStack[i].currentState == PigState.CanMove)
                 pigStack[i].MoveToStack(newPos);
-            // còn đang nhảy → khi đáp, callback của nó sẽ tự gọi TryStartBottomPig
-        }
-    }
-    private bool isHit = false;
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Pig"))
-        {
-            isHit = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Pig"))
-        {
-            isHit = false;
         }
     }
 

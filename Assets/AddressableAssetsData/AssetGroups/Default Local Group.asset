@@ -16,27 +16,27 @@ MonoBehaviour:
   m_GUID: 8d94db758ce8d8f4a882b1905a993b28
   m_SerializeEntries:
   - m_GUID: 086c3727730e490449398c230c93fed4
-    m_Address: PopupFullSlot
+    m_Address: /PopupFullSlot.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1212190b5a16f0442a3d9c82bb498017
-    m_Address: PopupHiddenMechanic
+    m_Address: /PopupHiddenMechanic.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1ad8e1b8660a69540a7b595d63db245f
-    m_Address: PopupPickAnyCat
+    m_Address: /PopupPickAnyCat.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1b5045fde1e10674fa524b177f1b5c21
-    m_Address: PopupBalloon
+    m_Address: /PopupBalloon.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5bec78e127303834b86a58647df81cb0
-    m_Address: PopupLevel1
+    m_Address: /PopupLevel1.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -46,57 +46,57 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 606ca11a88467994da468383d8981376
-    m_Address: PopupRetry
+    m_Address: /PopupRetry.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6ebe8b1b60de4c4469ad3f8bcf14e9e5
-    m_Address: PopupSuperCat
+    m_Address: /PopupSuperCat.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7733858d60f2cc249a35bf046bf40946
-    m_Address: PopupLoading
+    m_Address: /PopupLoading.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7d695335eed0cda43a64427aa1c54dac
-    m_Address: PopupGameplaySettings
+    m_Address: /PopupGameplaySettings.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 81ea5e7900181b64f96b1445edcc4bb0
-    m_Address: PopupShuffle
+    m_Address: /PopupShuffle.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8ff4ae9d48f78d54f9126a39c9de8151
-    m_Address: PopupSettings
+    m_Address: /PopupSettings.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ad0ed934907a96e4fae57dbe99605802
-    m_Address: PopupAddTray
+    m_Address: /PopupAddTray.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cc9ec3a5865237040ac1938430516847
-    m_Address: PopupWin
+    m_Address: /PopupWin.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d1a2a7b5ebf9b7c4a843ce535681a75f
-    m_Address: PopupClickBlock
+    m_Address: /PopupClickBlock.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e1e30a341a572ac408032cfd17a8ba7b
-    m_Address: PopupGameOver
+    m_Address: /PopupGameOver.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f9f6bf2cd34ba1346b36a89cf822bf31
-    m_Address: PopupLinkMechanic
+    m_Address: /PopupLinkMechanic.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -10,7 +10,6 @@ public class SpawnManager : MonoBehaviour
 {
     [Header("Block Settings")]
     public Transform blockGroup;
-    private float blockSpacing = 1.2f;
 
     public GameObject blockPrefab;
     public Transform blockSpawnPoint;
@@ -31,8 +30,8 @@ public class SpawnManager : MonoBehaviour
     [Header("Link Settings")]
     public Link linkPrefabs;
     [Header("Spawn Area — khớp với sprite scale của blockSpawnPoint")]
-    private float _spawnAreaWidth = 3.6f; // sprite scale X
-    private float _spawnAreaHeight = 4.5f;
+    private float _spawnAreaWidth = 3.96f; // sprite scale X
+    private float _spawnAreaHeight = 4.95f;
 
     void OnEnable()
     {
@@ -130,15 +129,16 @@ public class SpawnManager : MonoBehaviour
         if (gridData == null || width <= 0 || height <= 0) return;
 
         int W = width, H = height;
-
         float spacingX = _spawnAreaWidth / W;
         float spacingZ = _spawnAreaHeight / H;
+        float spacing = Mathf.Min(spacingX, spacingZ);
 
         float fillRatio = 7f;
-        Vector3 scale = new Vector3(spacingX * fillRatio, 1f, spacingZ * fillRatio);
+        float uniformScale = spacing * fillRatio;
+        Vector3 scale = new Vector3(uniformScale, uniformScale, uniformScale);
 
-        float offsetX = (W - 1) * spacingX * 0.5f;
-        float offsetZ = (H - 1) * spacingZ * 0.5f;
+        float offsetX = (W - 1) * spacing * 0.5f;
+        float offsetZ = (H - 1) * spacing * 0.5f;
 
         for (int y = 0; y < H; y++)
         {
@@ -151,9 +151,9 @@ public class SpawnManager : MonoBehaviour
                 if (colorType == "empty") continue;
 
                 Vector3 localPos = new Vector3(
-                    x * spacingX - offsetX,
+                    x * spacing - offsetX,
                     0f,
-                    (H - 1 - y) * spacingZ - offsetZ
+                    (H - 1 - y) * spacing - offsetZ
                 );
 
                 Vector3 worldPos = blockSpawnPoint.TransformPoint(localPos);

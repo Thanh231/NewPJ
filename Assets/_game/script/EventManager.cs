@@ -38,4 +38,6 @@ public class EventManager
     public static Action onFullSlotTutorial;
     public static Action closeClickBlockPopup;
 
+    public static Action InRushMode;
+
 }

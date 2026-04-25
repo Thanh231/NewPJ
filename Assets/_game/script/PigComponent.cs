@@ -32,7 +32,7 @@ public class PigComponent : MonoBehaviour
     public PigComponent leftPig { get; private set; } = null;
     public PigComponent rightPig { get; private set; } = null;
     public PigState currentState = PigState.InLane;
-    private Vector3 _rayCastDirection = Vector3.forward;
+    // private Vector3 _rayCastDirection = Vector3.forward;
     private WavyLineRenderer _wavyLine;
 
     private Vector3 initScale;
@@ -50,16 +50,12 @@ public class PigComponent : MonoBehaviour
     public GameObject body2Model;
     public GameObject tailModel;
     public GameObject Model;
-
     public TextMeshPro bulletText;
     public Material hiddenMaterial;
     public Material normalMaterial;
     public Material normalFaceMaterial;
     public List<GameObject> ammoCircles;
     public Transform model;
-
-    // public Transform canvasTransform;
-    private Vector3 initCanvasLocalPos;
     public Transform currentPlate;
     public GameObject spoolDissapearVFX;
     public GameObject landOnDiskVFX;
@@ -71,13 +67,12 @@ public class PigComponent : MonoBehaviour
     public MMF_Player jumpToConveyorFB;
     public MMF_Player jumpToQueueFB;
     public MMF_Player onLandFB;
-    // public MMF_Player scaleDownFB;
     public MMF_Player changeColorFeedBack;
     public MMF_Player invalidFB;
-    // private Coroutine _mainCoroutine;
     private float _slowdownTimer = 0f;
     private bool _isSlowedDown = false;
     private System.Threading.CancellationTokenSource _stateCTS;
+    private bool _isOnCurve = false;
     private void ChangeState(PigState newState)
     {
         currentState = newState;
@@ -114,6 +109,23 @@ public class PigComponent : MonoBehaviour
         // {
         //     animator.SetInteger("state", animValue);
         // }
+    }
+    void OnEnable()
+    {
+        EventManager.InRushMode += TakeRushMode;
+    }
+
+    void OnDisable()
+    {
+        EventManager.InRushMode -= TakeRushMode;
+    }
+    private void TakeRushMode()
+    {
+        isRush = true;
+        if (currentState == PigState.OnConveyor)
+        {
+            SetConveyorSpeedMultiplier(2f);
+        }
     }
     public void Initialize(string color, int bulletCount, int laneIndex, Color lineColor, float _speed, List<Transform> paths, bool isHidden)
     {
@@ -377,7 +389,10 @@ public class PigComponent : MonoBehaviour
         if (_wavyLine != null)
             _wavyLine.HideLineImmediately();
         _lockedTargets = 0;
-        AudioController.instance.PlaySound(AudioIndex.destroy_cat.ToString());
+        if (HandlePigBehavior.instance.isTesting == false)
+        {
+            AudioController.instance.PlaySound(AudioIndex.destroy_cat.ToString());
+        }
         ChangeState(PigState.Destroying);
         bulletText.text = "";
         StartNewLogic(async token => await DestroyAnimationInternal(token));
@@ -469,7 +484,7 @@ public class PigComponent : MonoBehaviour
         ChangeState(PigState.CanMove);
         onComplete?.Invoke();
 
-        _rayCastDirection = allWaypoints[0].forward;
+        // _rayCastDirection = allWaypoints[0].forward;
         if (_wavyLine != null)
         {
             _wavyLine.UpdateStartPoint(wavyPoint.position);
@@ -528,21 +543,30 @@ public class PigComponent : MonoBehaviour
 
         float checkDistance = 10f;
         Vector3 currentPos = rayCastPoint.position;
+        Vector3 dir = model.up;
 
-        if (Physics.Raycast(currentPos, _rayCastDirection, out RaycastHit hit, checkDistance, blockLayer))
+        bool didHit = Physics.Raycast(currentPos, dir, out RaycastHit hit, checkDistance, blockLayer);
+
+        if (didHit)
+        {
+            Debug.DrawLine(currentPos, hit.point, Color.green);
+            Debug.DrawLine(hit.point, currentPos + dir * checkDistance, Color.yellow);
+        }
+        else
+        {
+            Debug.DrawRay(currentPos, dir * checkDistance, Color.red);
+        }
+        // ------------------------
+
+        if (didHit)
         {
             var blockComp = hit.collider.gameObject.GetComponent<Block>();
-
-            if (blockComp != null && blockComp.color == color)
+            if (blockComp != null && blockComp.color == color && !blockComp.isAlreadyDestroyed)
             {
-                if (!blockComp.isAlreadyDestroyed)
-                {
-                    blockComp.isAlreadyDestroyed = true;
-
-                    _wavyLine.AddTarget(hit.collider.gameObject);
-                    _lockedTargets++;
-                    blockComp.SetUnactive(false);
-                }
+                blockComp.isAlreadyDestroyed = true;
+                _wavyLine.AddTarget(hit.collider.gameObject);
+                _lockedTargets++;
+                // blockComp.Test();
             }
         }
     }
@@ -574,10 +598,10 @@ public class PigComponent : MonoBehaviour
 
             Quaternion targetRot = Quaternion.LookRotation(current.up, current.forward);
 
-            if (Mathf.Abs(Vector3.Dot(_rayCastDirection, current.forward)) < 0.01f)
-            {
-                _rayCastDirection = current.transform.forward;
-            }
+            // if (Mathf.Abs(Vector3.Dot(_rayCastDirection, current.forward)) < 0.01f)
+            // {
+            //     _rayCastDirection = current.transform.forward;
+            // }
 
             if (current.gameObject.CompareTag("ControlPos") && i + 2 <= targetIndex)
             {
@@ -621,6 +645,7 @@ public class PigComponent : MonoBehaviour
         float duration = curveLength / speed;
         float elapsed = 0;
 
+        _isOnCurve = true;
         while (elapsed < duration)
         {
             if (token.IsCancellationRequested) return;
@@ -639,16 +664,12 @@ public class PigComponent : MonoBehaviour
         }
         if (this == null || token.IsCancellationRequested) return;
         rb.MovePosition(end);
+        _isOnCurve = false;
         model.rotation = endRotation;
     }
 
     public void JumpToQueue(Vector3 targetPosition, float speed, Action onComplete = null)
     {
-        if (_wavyLine != null)
-        {
-            _wavyLine.ClearAllTargets();
-            _wavyLine.HideLineImmediately();
-        }
         _lockedTargets = 0;
         model.rotation = Quaternion.identity;
         ChangeState(PigState.DoNothing);
@@ -664,6 +685,11 @@ public class PigComponent : MonoBehaviour
             jumpToQueueFB.PlayFeedbacks();
             onLandFB.PlayFeedbacks();
             model.localScale = initScale;
+            if (_wavyLine != null)
+            {
+                _wavyLine.ClearAllTargets();
+                _wavyLine.HideLineImmediately();
+            }
         });
 
     }
@@ -815,13 +841,14 @@ public class PigComponent : MonoBehaviour
             if (_slowdownTimer <= 0f)
             {
                 _isSlowedDown = false;
-                SetConveyorSpeedMultiplier(isRush ? 2f : 1f); // restore về speed đúng
+                SetConveyorSpeedMultiplier(isRush ? 2f : 1f);
             }
         }
         if (Bullet > 0 && (currentState == PigState.OnConveyor || currentState == PigState.Shooting))
         {
             _wavyLine.UpdateStartPoint(wavyPoint.position);
 
+            if (_isOnCurve) return;
             CheckAndAddTargetBlocks();
 
             if (_lockedTargets > 0)

@@ -15,7 +15,6 @@ public class TutorialViewManager : MonoBehaviour, ICanvasRaycastFilter
     private Canvas _canvas;
     private Camera _cam;
 
-    // Resolution mà các normalizedPos đang được calibrate
     private static readonly Vector2 ReferenceResolution = new Vector2(1080f, 1920f);
 
     private IDisposable _disposable;
@@ -98,30 +97,18 @@ public class TutorialViewManager : MonoBehaviour, ICanvasRaycastFilter
         target.anchoredPosition = new Vector2(2000f, 2000f);
     }
 
-    /// <summary>
-    /// Đặt target theo normalized position trong screen space.
-    /// normalizedPos (0,0) = góc dưới-trái màn hình, (1,1) = góc trên-phải.
-    /// size tính theo canvas units của reference resolution 1080x1920, tự động scale.
-    /// </summary>
     public void SetTargetCustomSize(Vector2 normalizedPos, Vector2 size)
     {
         if (target == null || _canvas == null) return;
 
         RectTransform canvasRect = _canvas.GetComponent<RectTransform>();
-
-        // 1. Chuyển normalizedPos từ screen fraction → pixel position thực
-        //    (0.5f, 0.15f) luôn = 50% chiều ngang, 15% từ đáy màn hình trên mọi thiết bị
         Vector2 screenPoint = new Vector2(
             normalizedPos.x * Screen.width,
             normalizedPos.y * Screen.height
         );
 
-        // 2. Convert screen pixel → canvas local position
-        //    ScreenPointToLocalPointInRectangle tự xử lý đúng mọi Canvas Scaler mode
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvasRect, screenPoint, _cam, out Vector2 localPoint);
-
-        // 3. Scale size từ reference 1080x1920 → canvas thực tế của thiết bị
         float widthScale  = canvasRect.rect.width  / ReferenceResolution.x;
         float heightScale = canvasRect.rect.height / ReferenceResolution.y;
         Vector2 scaledSize = new Vector2(size.x * widthScale, size.y * heightScale);
@@ -134,10 +121,6 @@ public class TutorialViewManager : MonoBehaviour, ICanvasRaycastFilter
         target.localScale = Vector3.one;
     }
 
-    /// <summary>
-    /// Đặt target khớp chính xác với một UI RectTransform trong scene.
-    /// Dùng cách này thay cho SetTargetCustomSize khi có object tham chiếu cụ thể.
-    /// </summary>
     public void SetTargetToObject(RectTransform sourceRect, Vector2 sizeOverride = default)
     {
         if (target == null || sourceRect == null) return;
@@ -209,7 +192,7 @@ public class TutorialViewManager : MonoBehaviour, ICanvasRaycastFilter
             case 2:  tutorialKey = GuideTutorialType.Level_2.ToString(); break;
             case 6:  tutorialKey = BoosterTutorialType.Booster_AddTray.ToString(); break;
             case 7:  tutorialKey = MechanicTutorialType.Mechanic_Hidden.ToString(); break;
-            case 12: tutorialKey = BoosterTutorialType.Booster_Balloon.ToString(); break;
+            case 10: tutorialKey = BoosterTutorialType.Booster_Balloon.ToString(); break;
             case 13: tutorialKey = MechanicTutorialType.Mechanic_Link.ToString(); break;
             case 15: tutorialKey = BoosterTutorialType.Booster_Shuffle.ToString(); break;
             case 18: tutorialKey = BoosterTutorialType.Booster_Super.ToString(); break;
@@ -247,7 +230,7 @@ public class TutorialViewManager : MonoBehaviour, ICanvasRaycastFilter
                 SetTargetFullSize();
                 PopupManager.instance.OpenPopup<PopupHiddenMechanic>().Forget();
                 break;
-            case 12:
+            case 10:
                 SetTargetZeroSize();
                 PopupManager.instance.OpenPopup<PopupBalloon>().Forget();
                 SceneGameplayUI.instance.InTutorial(BoosterTutorialType.Booster_Balloon);
